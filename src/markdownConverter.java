@@ -25,7 +25,7 @@ public class markdownConverter {
 			switch(args[0]) {
 
 			case "-c":
-			case "-convert":
+			case "--convert":
 				if(args.length < 3) {
 					args[0] = "";
 					continue;
@@ -39,19 +39,19 @@ public class markdownConverter {
 				
 				switch(args[3]) {
 
-				case "-stylish":
+				case "--stylish":
 					baseConversion(args);
 					System.out.println("");
 					System.out.println("Stylish Conversion Complete.");
 					break;
 					
-				case "-slide":
+				case "--slide":
 					baseConversion(args);
 					System.out.println("");
 					System.out.println("Slide Conversion Complete.");
 					break;
 					
-				case "-plain":
+				case "--plain":
 				default:
 					baseConversion(args);
 					System.out.println("");
@@ -61,7 +61,7 @@ public class markdownConverter {
 			break;
 
 			case "-h":
-			case "-help":
+			case "--help":
 				System.out.println("");
 				System.out.println("Input Form: [first] [second] [third] [fourth] / ex) -c README.md README.html -plain ");
 				System.out.println("In the first input, you can choose option \"-h(-help)\" or \"-c(-convert)\". ");
