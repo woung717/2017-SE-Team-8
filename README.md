@@ -15,5 +15,7 @@ This program is intended to convert markdown text to html text. Refer following 
 
 #### Input and Output Files
 
-+ -i <input_file(s)>: a (/ list of) input Markdown file(s) to be converted to HTML file.
--o <output file(s)>: a (/ list of) output HTML file(s) to be converted from Markdown file.  
+| Flag | Description |
+| --- | --- |
+| -i <input_file(s)> 	| input Markdown file(s) to be converted to HTML file. |
+| -o <output file(s)> 	| output HTML file(s) to be converted from Markdown file. |  
