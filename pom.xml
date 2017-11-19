@@ -1,0 +1,4 @@
+<build>
+	<sourceDirectory>src/main/java</sourceDirectory>
+	<outputDirectory>out/production/2017-SE-Team-8</outputDirectory>
+</build>
