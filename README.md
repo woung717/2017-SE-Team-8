@@ -10,7 +10,6 @@ This program is intended to convert markdown text to html text. Refer following 
 #### Option  
 
 | -t, --type=plain|stylish|slide 	| Generate HTML files as given style (default: plain) 	|
-|--------------------------------	|-----------------------------------------------------	|
 
 #### Input and Output Files
 
