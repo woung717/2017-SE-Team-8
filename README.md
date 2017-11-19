@@ -5,7 +5,7 @@ This program is intended to convert markdown text to html text. Refer following 
 
 ### Usage
 ```
-% MarkdownConverter [option] -i <input_file(s)> [-o <output_file(s)>]
+$ MarkdownConverter [option] -i <input_file(s)> [-o <output_file(s)>]
 ```
 #### Option  
 
