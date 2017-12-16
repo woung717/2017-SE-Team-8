@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class MarkdownConverter {
     static public ArrayList<String> inputFiles = new ArrayList<>();
     static public ArrayList<String> outputFiles = new ArrayList<>();
-    static public String type = "plain";
 
     public static void main(String[] args) {
         if(args.length < 1) {
@@ -24,9 +23,6 @@ public class MarkdownConverter {
                     if(arg.equals("-h") || arg.equals("--h")) {
                         helpFlag = true;
                         break;
-                    } else if(arg.matches("(-t|--type)=(plain|stylish|slide)")) {
-                        type = arg.split("=")[1];
-                        continue;
                     } else if(arg.equals("-i") || arg.equals("--input")) {
                         outputFlag = false;
                         inputFlag = true;
@@ -65,7 +61,6 @@ public class MarkdownConverter {
                         outputFiles.add(input + ".html");
                     }
                     // TODO : Do Conversion
-                    System.out.println(type);
                     System.out.println(inputFiles);
                     System.out.println(outputFiles);
                 }
@@ -74,10 +69,8 @@ public class MarkdownConverter {
     }
 
     public static void printHelpMessage() {
-        System.out.println("Usage: MarkdownConverter [option] -i <input_file(s)> [-o <output_file(s)>]");
+        System.out.println("Usage: MarkdownConverter -i <input_file(s)> [-o <output_file(s)>]");
         System.out.println(" Convert markdown format files to HTML files corresponding <input_file(s)> to <output_file(s)>.");
-        System.out.println(" option: ");
-        System.out.println("  -t, --type[=plain|=stylish|=slide]\tGenerate HTML files as given style (default: plain)");
     }
 
     public static void baseConversion(String[] args) {
