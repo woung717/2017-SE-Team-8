@@ -23,7 +23,7 @@ public class Document implements MDElement {
 
     @Override
     public void accept(MDElementVisitor visitor) {
-
+        visitor.visitDocument(this);
     }
 
     public void loadMarkdownFromFile(String file) {
