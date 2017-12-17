@@ -3,11 +3,11 @@ package edu.handong.se.markdownconverter;
 /**
  * Created by Shin on 2017-12-16.
  */
-public class Header {
+public class Header extends Structure {
     private String type;
     private int level;
 
-    public Header(String type, int level) {
+    public Header(String setext, int i) {
         this.type = type;
         this.level = level;
     }

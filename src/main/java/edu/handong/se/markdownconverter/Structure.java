@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Structure implements MDElement {
     private String type;
+    private List<Text> text;
     private List<Structure> children;
 
     public Structure() {
@@ -29,5 +30,9 @@ public class Structure implements MDElement {
 
     public int getChildrenSize() {
         return this.children.size();
+    }
+
+    public void addChild(Structure struct) {
+        this.children.add(struct);
     }
 }

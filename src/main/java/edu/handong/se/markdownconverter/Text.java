@@ -3,7 +3,7 @@ package edu.handong.se.markdownconverter;
 /**
  * Created by Shin on 2017-12-16.
  */
-public class Text {
+public class Text extends Structure {
     private String contents;
 
     public Text() {
@@ -11,7 +11,7 @@ public class Text {
     }
 
     public Text(String contents) {
-        this.contents = "";
+        this.contents = contents;
     }
 
     public String getContents() {
