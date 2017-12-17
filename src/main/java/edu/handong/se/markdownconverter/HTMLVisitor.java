@@ -16,25 +16,6 @@ public class HTMLVisitor implements MDElementVisitor {
 
     @Override
     public void visitDocument(Document doc) {
-        for(int i = 0; i < nLine; i++) {
-            String line;
-
-            if(line.matches("[=]+")) {
-                Header header = new Header("setext", 1);
-
-                header.addChild(new Text(textBuffer.remove(textBuffer.size() - 1)));
-                root.addChild(header);
-            } else if(line.matches("[-]+")) {
-                Header header = new Header("setext", 2);
-
-                header.addChild(new Text(textBuffer.remove(textBuffer.size() - 1)));
-                root.addChild(header);
-            } else {
-                textBuffer.add(line);
-            }
-        }
-
-        ASTs.add(root);
     }
 
     @Override

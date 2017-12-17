@@ -1,8 +1,5 @@
 package edu.handong.se.markdownconverter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,11 +9,11 @@ import java.util.List;
 
 public class Document implements MDElement {
     private String file;
-    private List<Structure> AST;
+    public List<Structure> struct;
 
     public Document(String file) {
         this.file = file;
-        this.AST = new LinkedList<>();
+        this.struct = new LinkedList<>();
     }
 
     public void accept(MDElementVisitor visitor) {

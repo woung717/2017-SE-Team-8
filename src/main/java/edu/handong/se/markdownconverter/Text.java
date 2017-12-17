@@ -4,21 +4,21 @@ package edu.handong.se.markdownconverter;
  * Created by Shin on 2017-12-16.
  */
 public class Text extends Structure {
-    private String contents;
+    private String value;
 
     public Text() {
-        this.contents = "";
+        this.value = "";
     }
 
-    public Text(String contents) {
-        this.contents = contents;
+    public Text(String value) {
+        this.value = value;
     }
 
-    public String getContents() {
-        return contents;
+    public String getValue() {
+        return value;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

@@ -27,9 +27,19 @@ public class MDParser {
             BufferedReader br = new BufferedReader(new FileReader(this.file));
 
             while((line = br.readLine()) != null) {
-                this.textBuffer.add(line);
+                if(line.matches("[=]+")) {
+                    Header header = new Header("setext", 1);
 
+                    header.addChild(new PlainText(textBuffer.remove(textBuffer.size() - 1)));
+                    doc.struct.add(header);
+                } else if(line.matches("[-]+")) {
+                    Header header = new Header("setext", 2);
 
+                    header.addChild(new Text(textBuffer.remove(textBuffer.size() - 1)));
+                    doc.struct.add(header);
+                } else {
+                    textBuffer.add(line);
+                }
             }
         } catch (IOException e) {
             System.out.println("File load error.");
