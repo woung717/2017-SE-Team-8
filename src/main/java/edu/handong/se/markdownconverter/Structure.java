@@ -7,21 +7,17 @@ import java.util.List;
  * Created by Shin on 2017-12-16.
  */
 public class Structure implements MDElement {
-    private String type;
-    private List<Text> text;
+    private List<Text> texts;
     private List<Structure> children;
 
     public Structure() {
+        this.texts = new LinkedList<>();
         this.children = new LinkedList<>();
     }
 
     @Override
     public void accept(MDElementVisitor visitor) {
-
-    }
-
-    public String getType() {
-        return this.type;
+        visitor.visitStructure(this);
     }
 
     public Structure getChild(int index) {
@@ -34,5 +30,9 @@ public class Structure implements MDElement {
 
     public void addChild(Structure struct) {
         this.children.add(struct);
+    }
+
+    public void addText(Text text) {
+        this.texts.add(text);
     }
 }

@@ -30,12 +30,18 @@ public class MDParser {
                 if(line.matches("[=]+")) {
                     Header header = new Header("setext", 1);
 
-                    header.addChild(new PlainText(textBuffer.remove(textBuffer.size() - 1)));
+                    header.addText(new PlainText(textBuffer.remove(textBuffer.size() - 1)));
                     doc.struct.add(header);
                 } else if(line.matches("[-]+")) {
                     Header header = new Header("setext", 2);
 
-                    header.addChild(new Text(textBuffer.remove(textBuffer.size() - 1)));
+                    header.addText(new PlainText(textBuffer.remove(textBuffer.size() - 1)));
+                    doc.struct.add(header);
+                } else if(line.matches("^[#]+ .*")) {
+                    String[] s = line.split(" ");
+                    Header header = new Header("atx", s[0].length());
+
+                    header.addText(new PlainText(line.replace("#", "").trim()));
                     doc.struct.add(header);
                 } else {
                     textBuffer.add(line);

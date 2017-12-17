@@ -7,7 +7,7 @@ public class Header extends Structure {
     private String type;
     private int level;
 
-    public Header(String setext, int i) {
+    public Header(String type, int level) {
         this.type = type;
         this.level = level;
     }

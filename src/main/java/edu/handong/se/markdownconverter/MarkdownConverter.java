@@ -8,10 +8,11 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class MarkdownConverter {
-    static public ArrayList<String> inputFiles = new ArrayList<>();
-    static public ArrayList<String> outputFiles = new ArrayList<>();
 
     public static void main(String[] args) {
+        ArrayList<String> inputFiles = new ArrayList<>();
+        ArrayList<String> outputFiles = new ArrayList<>();
+
         if(args.length < 1) {
             printHelpMessage();
         } else {
@@ -57,12 +58,19 @@ public class MarkdownConverter {
                     System.out.println( "I/O error: <input_file(s)> are not given or number of input files and output files are not matched." );
                     printHelpMessage();
                 } else {
-                    for(String input : inputFiles) {
-                        outputFiles.add(input + ".html");
+                    if(outputFiles.size() == 0) {
+                        for (String input : inputFiles) {
+                            outputFiles.add( input + ".html" );
+                        }
                     }
-                    // TODO : Do Conversion
-                    System.out.println(inputFiles);
-                    System.out.println(outputFiles);
+
+                    for(int i = 0; i < inputFiles.size(); i++) {
+                        MDParser parser = new MDParser(inputFiles.get(i));
+
+                        Document doc = parser.parse();
+
+                        System.out.println(outputFiles.get(i));
+                    }
                 }
             }
         }
