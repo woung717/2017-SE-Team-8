@@ -5,13 +5,8 @@ This program is intended to convert markdown text to html text. Refer following 
 
 ### Usage
 ```
-$ MarkdownConverter [option] -i <input_file(s)> [-o <output_file(s)>]
+$ MarkdownConverter -i <input_file(s)> [-o <output_file(s)>]
 ```
-#### Option  
-
-| Flag | Description |
-| --- | --- |
-| -t, --type=plain\|stylish\|slide	 | Generate HTML files as given style (default: plain) 	|
 
 #### Input and Output Files
 
@@ -22,5 +17,5 @@ $ MarkdownConverter [option] -i <input_file(s)> [-o <output_file(s)>]
 
 ### Example
 ```
-$ MarkdownConverter -t=stylish -i a.md b.md -o a.html b.html
+$ MarkdownConverter -i a.md b.md -o a.html b.html
 ```
