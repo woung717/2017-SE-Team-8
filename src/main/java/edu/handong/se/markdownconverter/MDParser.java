@@ -44,11 +44,13 @@ public class MDParser {
                                 boldType = (line.charAt(i + 1) == '*') ? "strong" : "emphasize";
                                 if (line.length() - 1 > i && line.charAt( i + 1 ) == '*') i++;
                                 starFlag = true;
+
                                 if (temp.length() > 0) textBuffer.add( new Text( temp ) );
                                 temp = "";
                             } else {
                                 if (line.length() - 1 > i && line.charAt( i + 1 ) == '*') i++;
                                 starFlag = false;
+
                                 if (temp.length() > 0) textBuffer.add( new StyleText( temp, boldType ) );
                                 temp = "";
                             }
@@ -61,15 +63,15 @@ public class MDParser {
                 } else if (line.matches( "[=]+" )) {  // setext type header level 1
                     Header header = new Header( "setext", 1 );
 
-                    for (Text t : textBuffer) {
-                        header.addText( t );
-                    }
+                    for (Text t : textBuffer) { header.addText( t ); }
+
                     doc.structures.add( header );
                     textBuffer.clear();
                 } else if (line.matches( "[-]+" )) {   // setext type header level 2
                     Header header = new Header( "setext", 2 );
 
                     for (Text t : textBuffer) { header.addText( t ); }
+
                     doc.structures.add( header );
                     textBuffer.clear();
                 } else if (line.matches( "^[#]+ .*" )) {   // atx type header
@@ -81,6 +83,7 @@ public class MDParser {
                     textBuffer.clear();
                 } else if (line.matches( "[\\s]*" )) {
                     clearTextBuffer(doc, textBuffer, itemList, listDepth, quotedBlock);
+
                     if(itemList != null) itemList = null;
                     if(quotedBlock != null) quotedBlock = null;
                 } else if (line.replaceAll( " ", "" ).matches( "[*-]{3,}" )) {
@@ -94,16 +97,15 @@ public class MDParser {
                         Item item = new Item(listDepth);
 
                         for(Text text : textBuffer) { item.addText(text); }
+
                         itemList.addItem(item);
                         textBuffer.clear();
                     }
 
                     int indent = getIndentLevel(line);
-                    if((indent / 2) > listDepth) {
-                        listDepth++;
-                    } else if((indent / 2) < listDepth) {
-                        listDepth--;
-                    }
+
+                    if((indent / 2) > listDepth) listDepth++;
+                    else if((indent / 2) < listDepth) listDepth--;
 
                     textBuffer.add(new PlainText(line.replaceAll("[*+-] ", "").trim()));
                 } else if(line.matches(">.+")){
@@ -117,6 +119,7 @@ public class MDParser {
                 }else {
                     if(quotedBlock != null) {
                         for(Text text : textBuffer) { quotedBlock.addText(text); }
+
                         textBuffer.clear();
                         doc.structures.add(quotedBlock);
                         quotedBlock = null;
@@ -139,6 +142,7 @@ public class MDParser {
                 Item item = new Item(depth);
 
                 for (Text text : textBuffer) { item.addText( text ); }
+
                 itemList.addItem( item );
                 textBuffer.clear();
             }
@@ -147,6 +151,7 @@ public class MDParser {
 
         if(quotedBlock != null) {
             for(Text text : textBuffer) { quotedBlock.addText(text); }
+
             textBuffer.clear();
             doc.structures.add(quotedBlock);
         }
@@ -155,6 +160,7 @@ public class MDParser {
             Block block = new Block();
 
             for (Text t : textBuffer) { block.addText( t ); }
+
             doc.structures.add( block );
             textBuffer.clear();
         }
