@@ -66,7 +66,6 @@ public class MarkdownConverter {
 
                     for(int i = 0; i < inputFiles.size(); i++) {
                         MDParser parser = new MDParser(inputFiles.get(i));
-
                         Document doc = parser.parse();
 
                         System.out.println(outputFiles.get(i));
