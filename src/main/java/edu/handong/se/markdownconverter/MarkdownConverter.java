@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MarkdownConverter {
 
     public static void main(String[] args) {
-        ArrayList<String> inputFiles = new ArrayList<>();
-        ArrayList<String> outputFiles = new ArrayList<>();
+        List<String> inputFiles = new ArrayList<>();
+        List<String> outputFiles = new ArrayList<>();
+        List<Document> docs = new LinkedList<>();
 
         if(args.length < 1) {
             printHelpMessage();
@@ -66,9 +69,8 @@ public class MarkdownConverter {
 
                     for(int i = 0; i < inputFiles.size(); i++) {
                         MDParser parser = new MDParser(inputFiles.get(i));
-                        Document doc = parser.parse();
 
-                        System.out.println(outputFiles.get(i));
+                        docs.add(parser.parse());
                     }
                 }
             }

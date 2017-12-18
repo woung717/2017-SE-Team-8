@@ -20,19 +20,11 @@ public class Structure implements MDElement {
         visitor.visitStructure(this);
     }
 
-    public Structure getChild(int index) {
-        return this.children.get(index);
-    }
-
-    public int getChildrenSize() {
-        return this.children.size();
+    public void addText(Text text) {
+        this.texts.add(text);
     }
 
     public void addChild(Structure struct) {
         this.children.add(struct);
-    }
-
-    public void addText(Text text) {
-        this.texts.add(text);
     }
 }

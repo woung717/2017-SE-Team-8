@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Document implements MDElement {
     private String file;
-    public List<Structure> struct;
+    public List<Structure> structures;
 
     public Document(String file) {
         this.file = file;
-        this.struct = new LinkedList<>();
+        this.structures = new LinkedList<>();
     }
 
     public void accept(MDElementVisitor visitor) {
