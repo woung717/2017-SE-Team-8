@@ -33,7 +33,7 @@ public class MDParser {
             while((line = br.readLine()) != null) {
                 line = line.replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
 
-                if (line.matches( "(([^*]*[*]{1}[^*]+[*]{1}[^*]*)|([^*]*[*]{2}[^*]+[*]{2}[^*]*))" )) { // matches aa*aa*aa or aa**aa**aa
+                if (line.matches( "(([^*]*[*]{1}[^*]+[*]{1}[^*]*)|([^*]*[*]{2}[^*]+[*]{2}[^*]*))" )) {
                     String temp = "";
                     String boldType = "";
                     boolean starFlag = false;
@@ -42,6 +42,7 @@ public class MDParser {
                         if (line.charAt(i) == '*') {
                             if (!starFlag) {
                                 boldType = (line.charAt(i + 1) == '*') ? "strong" : "emphasize";
+
                                 if (line.length() - 1 > i && line.charAt( i + 1 ) == '*') i++;
                                 starFlag = true;
 
@@ -116,7 +117,7 @@ public class MDParser {
                     }
 
                     textBuffer.add(new PlainText(line.replaceAll(">", "").trim()));
-                }else {
+                } else {
                     if(quotedBlock != null) {
                         for(Text text : textBuffer) { quotedBlock.addText(text); }
 
