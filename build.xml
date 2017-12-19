@@ -1,0 +1,72 @@
+<project name="2017-SE-Team-8" default="build" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="lib/jacocoant.jar"/>
+	</taskdef>
+
+	<target name="init">
+		<mkdir dir="classes" />
+	</target>
+
+	<target name="build" depends="init"> 
+		<javac srcdir="src" destdir="classes" debug="true" includeantruntime="false" >
+			<classpath path="lib/junit.jar" />
+			<classpath path="lib/hamcrest-core.jar" />
+		</javac>
+	</target>
+
+	<target name="clean">
+		<delete dir="classes" />
+		<delete dir="report" />
+		<delete file="jacoco.exec" />
+	</target>
+
+	<target name="test" depends ="build">
+		<junit showoutput="true" printsummary="on" enabletestlistenerevents="true" fork="true">
+			<classpath path="classes" />
+			<classpath path="lib/junit.jar" />
+			<classpath path="lib/hamcrest-core.jar" />
+
+			<formatter type="plain" usefile="false" />
+
+			<test name="INSERTTESTNAMEHERE">
+			</test>
+		</junit>
+	</target>
+
+	<target name="cov-test" depends ="build">
+		<jacoco:coverage>
+			<junit showoutput="true" printsummary="on" enabletestlistenerevents="true" fork="true">
+				<classpath path="classes" />
+				<classpath path="lib/junit.jar" />
+				<classpath path="lib/hamcrest-core.jar" />
+
+				<formatter type="plain" usefile="false" />
+
+				<test name="INSERTTESTNAMEHERE">
+				</test>
+			</junit>
+		</jacoco:coverage>
+	</target>
+
+	<target name="cov-report" depends="cov-test">
+		<jacoco:report>
+			<executiondata>
+				<file file="jacoco.exec" />
+			</executiondata>
+
+			<structure name="MDconverter">
+				<classfiles>
+					<fileset dir="classes" />
+				</classfiles>
+				<sourcefiles>
+					<fileset dir="src" />
+				</sourcefiles>
+			</structure>
+
+			<html destdir="report" />
+		</jacoco:report>
+
+	</target>
+
+</project>
