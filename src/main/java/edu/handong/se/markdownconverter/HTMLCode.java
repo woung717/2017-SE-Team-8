@@ -8,9 +8,28 @@ public class HTMLCode extends Text {
     private String link;
     private String optional;
 
-    public HTMLCode(String id, String link, String optional) {
-        this.id = id;
+    public HTMLCode(String text, String link, String optional) {
+        super(text);
+
         this.link = link;
+        this.optional = optional;
+    }
+
+    public HTMLCode(String text, String id) {
+        super(text);
+
+        this.id = id;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setOptional(String optional) {
         this.optional = optional;
     }
 }

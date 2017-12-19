@@ -20,4 +20,7 @@ public class Document implements MDElement {
          visitor.visitDocument(this);
     }
 
+    public List<Structure> getStructures() {
+        return this.structures;
+    }
 }

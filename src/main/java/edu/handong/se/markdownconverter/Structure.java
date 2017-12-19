@@ -24,7 +24,15 @@ public class Structure implements MDElement {
         this.texts.add(text);
     }
 
+    public List<Text> getTexts() {
+        return this.texts;
+    }
+
     public void addChild(Structure struct) {
         this.children.add(struct);
+    }
+
+    public List<Structure> getChildren() {
+        return this.children;
     }
 }
