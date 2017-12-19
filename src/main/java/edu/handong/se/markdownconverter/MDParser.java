@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Shin on 2017-12-17.
@@ -158,9 +157,42 @@ public class MDParser {
 
                             if(code != null) {
                                 code.setLink(link);
-                                code.setOptional(optional);
+                                code.setTitle(optional);
                                 break;
                             }
+                        }
+                    }
+                } else if(line.matches(".*!\\[.+\\]\\(.+\\).*")) {
+                    String temp = "";
+                    String alt = "";
+                    String src = "";
+
+                    for(int i = 0; i < line.length(); i++) {
+                        if(line.length() - 1 > i + 1 && line.charAt(i) == '!' && line.charAt(i + 1) == '[') {
+                            if(temp.length() > 0) {
+                                textBuffer.add(new PlainText(temp));
+                                temp = "";
+                            }
+
+                            i += 2;
+                            while(line.charAt(i) != ']') {
+                                alt += line.charAt(i++);
+                            }
+
+                            i += 2;
+                            while(line.charAt(i) != ')') {
+                                src += line.charAt(i++);
+                            }
+
+                            HTMLCode image = new HTMLCode();
+
+                            image.setLink(src);
+                            image.setTitle(alt);
+
+                            textBuffer.add(image);
+                            alt = src = "";
+                        } else {
+                            temp += line.charAt(i);
                         }
                     }
                 } else if (line.matches( "[=]+" )) {  // setext type header level 1

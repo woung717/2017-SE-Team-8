@@ -6,13 +6,17 @@ package edu.handong.se.markdownconverter;
 public class HTMLCode extends Text {
     private String id;
     private String link;
-    private String optional;
+    private String title;
 
-    public HTMLCode(String text, String link, String optional) {
+    public HTMLCode() {
+        super();
+    }
+
+    public HTMLCode(String text, String link, String title) {
         super(text);
 
         this.link = link;
-        this.optional = optional;
+        this.title = title;
     }
 
     public HTMLCode(String text, String id) {
@@ -29,7 +33,7 @@ public class HTMLCode extends Text {
         this.link = link;
     }
 
-    public void setOptional(String optional) {
-        this.optional = optional;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
