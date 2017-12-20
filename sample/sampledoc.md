@@ -17,24 +17,25 @@ else
 </code></pre>
 
 
-Required qualification
----------
+### Required qualification ####
+
 * a Carmichael College student
   + (other RC student can join but Carmichael College students have priority)
 * Accommodation and meals will be PROVIDED during the I-HANST and preparation period.
 
 ## Application Deadline: ##
-11:50pm, 24th of December 2017 [link][1]https://goo.gl/forms/vVrEKKN88WjOjt3J2
+11:50pm, 24th of December 2017 [link][1] [link][2]
 
 **Thank you.**
 
 *Inquiry*
 
-> Mr. Deun KIM deun.kim@handong.edu / 054-260-1767
+> Mr. Deun KIM deun.kim@handong.edu / `054-260-1767`
 
 - - -
 Submit the report via [Hisnet](http://hisnet.handong.edu "Hisnet").
 All copy rights reserved in Handong Global University  ![tag](https://www.handong.edu/site/handong/res/img/logo.png)
 
-[1]: https://goo.gl/forms/vVrEKKN88WjOjt3J2 "Google Form"
+[1]: https://goo.gl/forms/vVrEKKN88WjOjt3J2 (Google Form)
+[2]: http://www.handong.edu "Handong"
 

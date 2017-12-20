@@ -41,6 +41,7 @@ public class MDParserTest
 	public void styleTextTest() {
 		StyleText st = new StyleText("Hello", "Italic");
 		assertEquals("Hello", st.getValue());
+		assertEquals("Italic", st.getType());
 	}
 
 	@Test
@@ -128,9 +129,14 @@ public class MDParserTest
 		Document doc1 = new Document(fileName1, "sampledoc.html");
 		MDParser MD1 = new MDParser(doc1);
 		MD1.parse();
+		MD1.parse(doc1);
 	}
 
-
+	@Test
+	public void itemTest() {
+		Item i = new Item(1);
+		assertEquals(1, i.getDepth());
+	}
 
 	@Test
 	public void plainVisitorTest() {
