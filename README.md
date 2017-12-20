@@ -24,5 +24,5 @@ $ java -jar MarkdownConverter.jar [-h|--help] -i <input_file(s)> [-o <output_fil
 
 ### Example
 ```
-$ MarkdownConverter -i a.md b.md -o a.html b.html
+$ ava -jar MarkdownConverter.jar -i a.md b.md -o a.html b.html
 ```
