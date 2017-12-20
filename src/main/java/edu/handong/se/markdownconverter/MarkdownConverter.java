@@ -82,37 +82,4 @@ public class MarkdownConverter {
         System.out.println("Usage: MarkdownConverter -i <input_file(s)> [-o <output_file(s)>]");
         System.out.println(" Convert markdown format files to HTML files corresponding <input_file(s)> to <output_file(s)>.");
     }
-
-    public static void baseConversion(String[] args) {
-        try {
-            if (args[1] != null && args[2] != null) {
-                File mdFile = new File(args[1]);
-                File htmlFile = new File(args[2]);
-
-                BufferedReader fRead = new BufferedReader(new FileReader(mdFile));
-                BufferedWriter fWrite = new BufferedWriter(new FileWriter(htmlFile));
-
-                String HTMLStart = "<!DOCTYPE html> \r\n" + "<html> \r\n" +
-                        "<head> \r\n" + "<meta charset=\"EUC-KR\"> \r\n" + "<title>"
-                        + args[2] + "</title> \r\n" + "</head> \r\n" + "<body> \r\n";
-                String HTMLEnd = "</body> \r\n" + "</html>";
-                String line = null;
-
-                fWrite.write(HTMLStart);
-                while((line = fRead.readLine()) != null) {
-                    fWrite.write(line);
-                    fWrite.write("\r\n");
-                }
-
-                fWrite.write(HTMLEnd);
-                fWrite.close();
-                fRead.close();
-            }
-            else {
-                System.out.println("Input Error!");
-            }
-        } catch (Exception e) {
-            System.out.println("File Error!");
-        }
-    }
 }

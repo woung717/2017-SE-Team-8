@@ -1,6 +1,5 @@
 package edu.handong.se.markdownconverter;
 
-import javax.swing.text.html.HTML;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -103,7 +102,7 @@ public class PlainHTMLVisitor implements MDElementVisitor {
 
             for(int i = 0; i < currentDepth; i++)
                 this.bw.write("</ul>" + "\n");
-            
+
             this.bw.write("</ul>" + "\n");
         } else if(struct instanceof HorizontalRule) {
             this.bw.write("<hr />" + "\n");
