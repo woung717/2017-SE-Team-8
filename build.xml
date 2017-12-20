@@ -58,7 +58,7 @@
 
 			<formatter type="plain" usefile="false" />
 
-			<test name="edu.handong.se.markdownconverter.test.MDParserTest">
+			<test name="test.MDParserTest">
 			</test>
 		</junit>
 	</target>
