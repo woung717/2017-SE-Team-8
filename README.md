@@ -11,7 +11,7 @@ $ ant [compile|build|test|cov-report|build-jar]
 
 ### Usage
 ```
-$ MarkdownConverter [-h|--help] -i <input_file(s)> [-o <output_file(s)>]
+$ java -jar MarkdownConverter.jar [-h|--help] -i <input_file(s)> [-o <output_file(s)>]
 ```
 
 #### Input and Output Files
