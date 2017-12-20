@@ -53,7 +53,19 @@ public class PlainHTMLVisitor implements MDElementVisitor {
             }
 
             this.bw.write("</h" + Integer.toString(header.getLevel()) + ">" + "\n");
-        } else if(struct instanceof Block) {
+        }  else if(struct instanceof QuotedBlock) {
+            QuotedBlock quotedBlock = (QuotedBlock) struct;
+
+            this.bw.write("<blockquote>");
+            this.bw.write("<p>");
+
+            for(Text t : quotedBlock.getTexts()) {
+                writeText(t);
+            }
+
+            this.bw.write("</p>");
+            this.bw.write("</blockquote>" + "\n");
+        } else if(struct instanceof Block && (struct.getTexts().size() != 0)) {
             Block block = (Block) struct;
 
             this.bw.write("<p>");
@@ -73,9 +85,9 @@ public class PlainHTMLVisitor implements MDElementVisitor {
                 Item item = (Item) child;
 
                 if(item.getDepth() > currentDepth) {
-                    this.bw.write("<ul>" + "\n");
                     currentDepth = item.getDepth();
-                } else if(item.getDepth() > currentDepth) {
+                    this.bw.write("<ul>" + "\n");
+                } else if(item.getDepth() < currentDepth) {
                     currentDepth = item.getDepth();
                     this.bw.write("</ul>" + "\n");
                 }
@@ -88,21 +100,13 @@ public class PlainHTMLVisitor implements MDElementVisitor {
 
                 this.bw.write("</li>" + "\n");
             }
+
+            for(int i = 0; i < currentDepth; i++)
+                this.bw.write("</ul>" + "\n");
+            
             this.bw.write("</ul>" + "\n");
         } else if(struct instanceof HorizontalRule) {
             this.bw.write("<hr />" + "\n");
-        } else if(struct instanceof QuotedBlock) {
-            QuotedBlock quotedBlock = (QuotedBlock) struct;
-
-            this.bw.write("<blockquote>");
-            this.bw.write("<p>");
-
-            for(Text t : quotedBlock.getTexts()) {
-                writeText(t);
-            }
-
-            this.bw.write("</p>");
-            this.bw.write("</blockquote>" + "\n");
         }
     }
 
@@ -121,7 +125,7 @@ public class PlainHTMLVisitor implements MDElementVisitor {
                 this.bw.write(html.getValue());
                 this.bw.write("</" + html.getType() + ">");
             } else if(html.getType().equals("img")) {
-                this.bw.write("<" + html.getType() + "src=\"" + html.getLink() + "\" alt=\"" + html.getTitle() + "\">");
+                this.bw.write("<" + html.getType() + " src=\"" + html.getLink() + "\" alt=\"" + html.getTitle() + "\">");
             }
         } else {
             this.bw.write(t.getValue());

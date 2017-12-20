@@ -23,12 +23,16 @@ public class MDParser {
         try {
             String line;
             int listDepth = 0;
+            boolean HTMLBlock = false;
             ItemList itemList = null;
             QuotedBlock quotedBlock = null;
             BufferedReader br = new BufferedReader(new FileReader(this.doc.getFile()));
 
             while((line = br.readLine()) != null) {
-                line = line.replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
+                line = line.replaceAll(".*&[^a].*]", "&amp;").replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
+
+                if(line.matches(".*<pre><code>.*")) HTMLBlock = true;
+                else if(line.matches(".*</code></pre>.*")) HTMLBlock = false;
 
                 if (line.matches( "([^*]*[*]+[^*]+[*]+[^*]*)" )) {
                     String temp = "";
@@ -61,7 +65,7 @@ public class MDParser {
                         }
                     }
 
-                    if (temp.length() != 0) textBuffer.add(new PlainText(temp));
+                    if (temp.length() != 0) textBuffer.add(new PlainText(temp + " "));
                 } else if(line.matches(".*[`]+[^`]+[`]+.*")) {
                     String temp = "";
                     boolean codeFlag = false;
@@ -91,7 +95,7 @@ public class MDParser {
                     }
 
                     if (temp.length() != 0) textBuffer.add(new PlainText(temp));
-                } else if(line.matches(".*\\[.+\\][^:]*")) {
+                } else if(line.matches("[^!]*\\[.+\\][\\[\\(].*")) {
                     String temp = "";
 
                     for(int i = 0; i < line.length(); i++) {
@@ -141,8 +145,8 @@ public class MDParser {
                         }
                     }
 
-                    if (temp.length() != 0) textBuffer.add(new PlainText(temp));
-                } else if(line.matches("\\[.+\\]:.+ \\(.+\\)")) {
+                    if(temp.length() != 0) textBuffer.add(new PlainText(temp + " "));
+                } else if(line.matches("\\[.+\\]:.+ [\\(\"].+[\\)\"]")) {
                     String[] meta = line.split(" ");
 
                     if(meta.length >= 3) {
@@ -241,8 +245,8 @@ public class MDParser {
                     if((indent / 2) > listDepth) listDepth++;
                     else if((indent / 2) < listDepth) listDepth--;
 
-                    textBuffer.add(new PlainText(line.replaceAll("[*+-] ", "").trim()));
-                } else if(line.matches(">.+")){
+                    textBuffer.add(new PlainText(line.replaceAll("[*+-] ", "").trim() + " "));
+                } else if(line.matches("[\\s]*>.+")){
                     if(quotedBlock == null) {
                         clearTextBuffer(doc, textBuffer, itemList, listDepth, quotedBlock);
 
@@ -259,6 +263,7 @@ public class MDParser {
                         quotedBlock = null;
                     }
 
+                    if(HTMLBlock) line += "\n";
                     if(itemList != null) line = line.trim();
                     textBuffer.add(new PlainText(line + " "));
                 }
@@ -312,7 +317,7 @@ public class MDParser {
 
             for (Text t : textBuffer) { block.addText(t); }
 
-            doc.structures.add( block );
+            doc.structures.add(block);
             textBuffer.clear();
         }
     }
