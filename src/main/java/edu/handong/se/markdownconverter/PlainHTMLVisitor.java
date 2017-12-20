@@ -15,13 +15,25 @@ public class PlainHTMLVisitor implements MDElementVisitor {
     @Override
     public void visitDocument(Document doc) {
         try {
-            this.bw = new BufferedWriter(new FileWriter(doc.getFile()));
+            this.bw = new BufferedWriter(new FileWriter(doc.getOutFile()));
 
             List<Structure> structures = doc.getStructures();
+
+            this.bw.write("<html>" + "\n");
+
+            this.bw.write("<head>");
+            // TODO : CSS Part
+            this.bw.write("</head>" + "\n");
+
+            this.bw.write("<body>"  + "\n");
 
             for(Structure struct : structures) {
                 struct.accept(this);
             }
+
+            this.bw.write("</body>"  + "\n");
+
+            this.bw.write("</html>");
 
             this.bw.close();
         } catch (IOException e) {
@@ -52,15 +64,45 @@ public class PlainHTMLVisitor implements MDElementVisitor {
 
             this.bw.write("</p>" + "\n");
         } else if(struct instanceof ItemList) {
+            int currentDepth = 0;
             ItemList itemList = (ItemList) struct;
 
             this.bw.write("<ul>" + "\n");
-                for(Structure child: itemList.getChildren()) {
-                    Item item = (Item) child;
 
-                    
+            for(Structure child: itemList.getChildren()) {
+                Item item = (Item) child;
+
+                if(item.getDepth() > currentDepth) {
+                    this.bw.write("<ul>" + "\n");
+                    currentDepth = item.getDepth();
+                } else if(item.getDepth() > currentDepth) {
+                    currentDepth = item.getDepth();
+                    this.bw.write("</ul>" + "\n");
                 }
+
+                this.bw.write("<li>");
+
+                for(Text t : item.getTexts()) {
+                    writeText(t);
+                }
+
+                this.bw.write("</li>" + "\n");
+            }
             this.bw.write("</ul>" + "\n");
+        } else if(struct instanceof HorizontalRule) {
+            this.bw.write("<hr />" + "\n");
+        } else if(struct instanceof QuotedBlock) {
+            QuotedBlock quotedBlock = (QuotedBlock) struct;
+
+            this.bw.write("<blockquote>");
+            this.bw.write("<p>");
+
+            for(Text t : quotedBlock.getTexts()) {
+                writeText(t);
+            }
+
+            this.bw.write("</p>");
+            this.bw.write("</blockquote>" + "\n");
         }
     }
 
@@ -85,5 +127,4 @@ public class PlainHTMLVisitor implements MDElementVisitor {
             this.bw.write(t.getValue());
         }
     }
-
 }
