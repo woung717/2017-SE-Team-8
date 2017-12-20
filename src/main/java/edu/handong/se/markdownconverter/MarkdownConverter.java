@@ -72,7 +72,7 @@ public class MarkdownConverter {
     }
 
     public static void printHelpMessage() {
-        System.out.println("Usage: MarkdownConverter -i <input_file(s)> [-o <output_file(s)>]");
+        System.out.println("Usage: java -jar MarkdownConverter.jar [-h|--help] -i <input_file(s)> [-o <output_file(s)>]");
         System.out.println(" Convert markdown format files to HTML files corresponding <input_file(s)> to <output_file(s)>.");
     }
 }
