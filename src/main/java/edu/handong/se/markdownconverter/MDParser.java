@@ -220,7 +220,7 @@ public class MDParser {
 
                     if(itemList != null) itemList = null;
                     if(quotedBlock != null) quotedBlock = null;
-                } else if (line.replaceAll( " ", "" ).matches( "[*-]{3,}" )) {
+                } else if (textBuffer.size() == 0 && line.replaceAll( " ", "" ).matches( "[*-]{3,}" )) {
                     doc.structures.add( new HorizontalRule() );
                 } else if (line.matches("[\\s]*[\\*+-] .+")) {
                     if(itemList == null) {
@@ -259,7 +259,8 @@ public class MDParser {
                         quotedBlock = null;
                     }
 
-                    textBuffer.add(new PlainText(line));
+                    if(itemList != null) line = line.trim();
+                    textBuffer.add(new PlainText(line + " "));
                 }
             }
             clearTextBuffer(doc, textBuffer, itemList, listDepth, quotedBlock);

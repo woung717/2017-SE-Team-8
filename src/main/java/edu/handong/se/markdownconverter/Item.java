@@ -9,4 +9,8 @@ public class Item extends Structure {
     public Item(int depth) {
         this.depth = depth;
     }
+
+    public int getDepth() {
+        return depth;
+    }
 }
