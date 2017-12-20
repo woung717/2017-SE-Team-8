@@ -1,6 +1,7 @@
 package edu.handong.se.markdownconverter;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +15,10 @@ public class PlainHTMLVisitor implements MDElementVisitor {
     @Override
     public void visitDocument(Document doc) {
         try {
+            if(!new File(doc.getFile()).isFile()) {
+                throw new IOException();
+            }
+
             this.bw = new BufferedWriter(new FileWriter(doc.getOutFile()));
 
             List<Structure> structures = doc.getStructures();
@@ -66,7 +71,7 @@ public class PlainHTMLVisitor implements MDElementVisitor {
 
             this.bw.write("</p>");
             this.bw.write("</blockquote>" + "\n");
-        } else if(struct instanceof Block && (struct.getTexts().size() != 0)) {
+        } else if(struct instanceof Block) {
             Block block = (Block) struct;
 
             this.bw.write("<p>");
@@ -125,7 +130,9 @@ public class PlainHTMLVisitor implements MDElementVisitor {
                 this.bw.write("<" + html.getType() + " href=\"" + html.getLink() + "\" title=\"" + html.getTitle() +"\">");
                 this.bw.write(html.getValue());
                 this.bw.write("</" + html.getType() + ">");
-            } else if(html.getType().equals("img")) {
+            }
+
+            if(html.getType().equals("img")) {
                 this.bw.write("<" + html.getType() + " src=\"" + html.getLink() + "\" alt=\"" + html.getTitle() + "\">");
             }
         } else {

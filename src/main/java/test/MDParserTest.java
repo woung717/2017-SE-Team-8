@@ -1,16 +1,15 @@
-package edu.handong.se.markdownconverter.test;
+package test;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import edu.handong.se.markdownconverter.*;
 
-import java.io.IOException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Arrays;
 
 
 public class MDParserTest
@@ -66,7 +65,7 @@ public class MDParserTest
 		html3.setType("?");
 		assertEquals("Thank you", html2.getId());
 		assertEquals("Are", html1.getType());
-		assertEquals("You", html1.getLink());
+		assertEquals("http://You", html1.getLink());
 		assertEquals("?", html1.getTitle());
 	}
 
@@ -99,7 +98,7 @@ public class MDParserTest
 	@Test
 	public void inputTest() {
 		MarkdownConverter MC = new MarkdownConverter();
-		String inputArgs1[] = {"-i", "a.md", "b.md", "-o", "a.html", "b.html"};
+		String inputArgs1[] = {"--input", "a.md", "b.md", "--output", "a.html", "b.html"};
 		MC.main(inputArgs1);
 
 		String inputArgs2[] = {"-h"};
@@ -108,18 +107,32 @@ public class MDParserTest
 		String inputArgs3[] = {"-t"};
 		MC.main(inputArgs3);
 
-		String inputArgs4[] = {"-i", "a.md", "-o", "a.html", "b.html"};
+		String inputArgs4[] = {"--input", "a.md", "--output", "a.html", "b.html"};
 		MC.main(inputArgs4);
 
-		String inputArgs5[] = {"-o", "a.html", "b.html"};
+		String inputArgs5[] = {"--output", "a.html", "b.html"};
 		MC.main(inputArgs5);
 
 		String inputArgs6[] = {""};
 		MC.main(inputArgs6);
 
-		String inputArgs7[] = {"-i", "a.md", "b.md"};
+		String inputArgs7[] = {"--input", "a.md", "b.md"};
 		MC.main(inputArgs7);
 
+		String inputArgs8[] = {"-o", "a.html", "b.html"};
+		MC.main(inputArgs8);
+
+		String inputArgs9[] = {"--i", "a.md", "b.md"};
+		MC.main(inputArgs9);
+
+		String inputArgs10[] = {"--help"};
+		MC.main(inputArgs10);
+
+		String[] InputArgs11 = new String[0];
+		MC.main(InputArgs11);
+
+		String inputArgs12[] = {"-i"};
+		MC.main(inputArgs12);
 	}
 
 	@Test
@@ -128,6 +141,7 @@ public class MDParserTest
 		Document doc1 = new Document(fileName1, "doc1.html");
 		MDParser MD1 = new MDParser(doc1);
 		MD1.parse();
+		MD1.parse(doc1);
 
 		String fileName2 = "sample/doc2.md";
 		Document doc2 = new Document(fileName2, "doc2.html");
@@ -143,59 +157,58 @@ public class MDParserTest
 		Document doc4 = new Document(fileName4, "doc4.html");
 		MDParser MD4 = new MDParser(doc4);
 		MD4.parse();
-	}
 
+		String fileName5 = "sample/sampledoc.md";
+		Document doc5 = new Document(fileName5, "sampledoc.html");
+		MDParser MD5 = new MDParser(doc5);
+		MD5.parse();
+
+		String fileName6 = "sample/missingsink.md";
+		Document doc6 = new Document(fileName6, "missingsink.html");
+		MDParser MD6 = new MDParser(doc6);
+		MD6.parse();
+	}
 
 
 	@Test
 	public void plainVisitorTest() {
 		PlainHTMLVisitor pv = new PlainHTMLVisitor();
-		String fileName1 = "sample/doc1.md";
-		Document doc1 = new Document(fileName1, "doc1.html");
-		pv.visitDocument(doc1);
-	/*
-		QuotedBlock qb = new QuotedBlock();
-		Text t = new Text("AAA");
-		qb.addText(t);
-		pv.visitStructure(qb);
+		Document doc1 = new Document("sample/sampledoc.md", "sampledoc.html");
 
-		Header hd = new Header("ext", 2);
-		hd.addText(t);
-		pv.visitStructure(hd);
+		MDParser parser = new MDParser(doc1);
 
-		Block b = new Block();
-		b.addText(t);
+		parser.parse().accept(pv);
+	}
 
-		ItemList il = new ItemList();
-		Item i1 = new Item(1);
-		Item i2 = new Item(2);
-		assertEquals(1, i1.getDepth());
-		il.addItem(i1);
-		il.addItem(i2);
-		pv.visitStructure(i1);
+	@Test
+	public void getIndentLevelTest() {
+		MDParser parser = new MDParser(null);
 
-		HorizontalRule hr = new HorizontalRule();
-		pv.visitStructure(hr);
+		assertEquals(0, parser.getIndentLevel(""));
+	}
 
+	@Test
+	public void acceptTest() {
+		Text text = new Text();
 
+		text.accept(null);
+	}
 
-		StyleText st = new StyleText("abc", "br");
-		pv.writeText(st);
+	@Test
+	public void IOExceptionTest() {
+		Document doc = new Document("", "");
+		PlainHTMLVisitor visitor = new PlainHTMLVisitor();
 
-		HTMLCode html1 = new HTMLCode("text", "a", "link", "title");
-		HTMLCode html2 = new HTMLCode("text", "img", "link", "title");
-		pv.writeText(html1);
-		pv.writeText(html2);
+		visitor.visitDocument(doc);
 
-		Text t = new Text("aaa", "bbb");
-		pv.writeText(t);
-	*/
+		MDParser parser = new MDParser(doc);
+
+		parser.parse();
 	}
 
 
 	public static void main(String [] args) {
-		MDParserTest md = new MDParserTest() ;
-
+		MDParserTest md = new MDParserTest();
 	}
 
 }
