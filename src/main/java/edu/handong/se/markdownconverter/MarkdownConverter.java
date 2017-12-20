@@ -72,6 +72,8 @@ public class MarkdownConverter {
 
                         docs.add(parser.parse());
                     }
+
+                    ;
                 }
             }
         }
