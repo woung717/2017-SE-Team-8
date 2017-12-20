@@ -9,12 +9,6 @@ This program is intended to convert markdown text to html text. Refer following 
 $ ant [compile|build|test|cov-report|build-jar]
 ```
 
-#### Build
-```
-$ ant build
-```
-
-
 ### Usage
 ```
 $ MarkdownConverter [-h|--help] -i <input_file(s)> [-o <output_file(s)>]
