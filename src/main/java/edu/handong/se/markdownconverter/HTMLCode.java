@@ -16,9 +16,9 @@ public class HTMLCode extends Text {
     public HTMLCode(String text, String type, String link, String title) {
         super(text);
 
-        this.type = type;
-        this.link = link;
-        this.title = title;
+        setType(type);
+        setLink(link);
+        setTitle(title);
     }
 
     public HTMLCode(String text, String type, String id) {
@@ -33,6 +33,8 @@ public class HTMLCode extends Text {
     }
 
     public void setLink(String link) {
+        if(!link.matches("http[s]*://.*")) link = "http://" + link;
+
         this.link = link;
     }
 

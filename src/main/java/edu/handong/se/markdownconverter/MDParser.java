@@ -29,7 +29,7 @@ public class MDParser {
             BufferedReader br = new BufferedReader(new FileReader(this.doc.getFile()));
 
             while((line = br.readLine()) != null) {
-                line = line.replaceAll(".*&[^a].*]", "&amp;").replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
+                line = line.replaceAll(".*\\&[^a].*]", "&amp;").replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
 
                 if(line.matches(".*<pre><code>.*")) HTMLBlock = true;
                 else if(line.matches(".*</code></pre>.*")) HTMLBlock = false;
