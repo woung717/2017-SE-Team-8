@@ -98,4 +98,15 @@
 
 	</target>
 
+	<target name = "build-jar">
+		<jar destfile = "MarkdownConverter.jar"
+			 basedir = "${build.dir}"
+			 excludes = "**/MDParserTest.class">
+
+			<manifest>
+				<attribute name = "Main-Class" value = "edu.handong.se.markdownconverter.MarkdownConverter"/>
+			</manifest>
+		</jar>
+	</target>
+
 </project>
