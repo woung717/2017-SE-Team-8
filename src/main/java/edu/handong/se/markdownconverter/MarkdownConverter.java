@@ -68,12 +68,11 @@ public class MarkdownConverter {
                     }
 
                     for(int i = 0; i < inputFiles.size(); i++) {
-                        MDParser parser = new MDParser(inputFiles.get(i));
+                        MDParser parser = new MDParser(new Document(inputFiles.get(i), outputFiles.get(i)));
+                        PlainHTMLVisitor pv = new PlainHTMLVisitor();
 
-                        docs.add(parser.parse());
+                        parser.parse().accept(pv);
                     }
-
-                    ;
                 }
             }
         }

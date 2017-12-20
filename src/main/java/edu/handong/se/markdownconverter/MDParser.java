@@ -11,23 +11,21 @@ import java.util.List;
  */
 
 public class MDParser {
-    private String file;
+    private Document doc;
     private List<Text> textBuffer;
 
-    public MDParser(String file) {
-        this.file = file;
+    public MDParser(Document doc) {
+        this.doc = doc;
         this.textBuffer = new ArrayList<>();
     }
 
     public Document parse() {
-        Document doc = new Document(this.file);
-
         try {
             String line;
             int listDepth = 0;
             ItemList itemList = null;
             QuotedBlock quotedBlock = null;
-            BufferedReader br = new BufferedReader(new FileReader(this.file));
+            BufferedReader br = new BufferedReader(new FileReader(this.doc.getFile()));
 
             while((line = br.readLine()) != null) {
                 line = line.replaceAll("\\\\<", "&lt;").replaceAll("\\\\>", "&gt;");
@@ -324,8 +322,8 @@ public class MDParser {
         return 0;
     }
 
-    public Document parse(String file) {
-        this.file = file;
+    public Document parse(Document doc) {
+        this.doc = doc;
 
         return this.parse();
     }

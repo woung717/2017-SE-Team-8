@@ -9,10 +9,12 @@ import java.util.List;
 
 public class Document implements MDElement {
     private String file;
+    private String outFile;
     public List<Structure> structures;
 
-    public Document(String file) {
+    public Document(String file, String outFile) {
         this.file = file;
+        this.outFile = outFile;
         this.structures = new LinkedList<>();
     }
 
@@ -22,5 +24,13 @@ public class Document implements MDElement {
 
     public List<Structure> getStructures() {
         return this.structures;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public String getOutFile() {
+        return outFile;
     }
 }
