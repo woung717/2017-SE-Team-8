@@ -98,7 +98,7 @@
 
 	</target>
 
-	<target name = "build-jar">
+	<target name = "build-jar" depends ="build">
 		<jar destfile = "MarkdownConverter.jar"
 			 basedir = "${build.dir}"
 			 excludes = "**/MDParserTest.class">
