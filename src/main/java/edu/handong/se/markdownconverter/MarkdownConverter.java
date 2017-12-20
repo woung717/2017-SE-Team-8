@@ -1,12 +1,6 @@
 package edu.handong.se.markdownconverter;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MarkdownConverter {
@@ -14,7 +8,6 @@ public class MarkdownConverter {
     public static void main(String[] args) {
         List<String> inputFiles = new ArrayList<>();
         List<String> outputFiles = new ArrayList<>();
-        List<Document> docs = new LinkedList<>();
 
         if(args.length < 1) {
             printHelpMessage();
@@ -24,7 +17,7 @@ public class MarkdownConverter {
 
             for(String arg : args) {
                 if(arg.startsWith("-")) {
-                    if(arg.equals("-h") || arg.equals("--h")) {
+                    if(arg.equals("-h") || arg.equals("--help")) {
                         helpFlag = true;
                         break;
                     } else if(arg.equals("-i") || arg.equals("--input")) {

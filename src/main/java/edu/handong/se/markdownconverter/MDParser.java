@@ -44,7 +44,7 @@ public class MDParser {
                             if (!starFlag) {
                                 boldType = (line.charAt(i + 1) == '*') ? "strong" : "em";
 
-                                if (line.length() - 1 > i && line.charAt(i + 1) == '*') i++;
+                                if (line.charAt(i + 1) == '*') i++;
                                 starFlag = true;
 
                                 if (temp.length() > 0) {
@@ -75,19 +75,13 @@ public class MDParser {
                             if(codeFlag == false) {
                                 codeFlag = true;
 
-                                if (temp.length() > 0) {
-                                    textBuffer.add(new PlainText(temp));
-                                    temp = "";
-                                }
+                                textBuffer.add(new PlainText(temp));
+                                temp = "";
                             } else {
-                                if(temp.length() == 0) continue;
-
                                 codeFlag = false;
 
-                                if (temp.length() > 0) {
-                                    textBuffer.add(new StyleText(temp, "code"));
-                                    temp = "";
-                                }
+                                textBuffer.add(new StyleText(temp, "code"));
+                                temp = "";
                             }
                         } else {
                             temp += line.charAt(i) ;
@@ -100,46 +94,37 @@ public class MDParser {
 
                     for(int i = 0; i < line.length(); i++) {
                         if(line.charAt(i) == '[') {
-                            if (temp.length() > 0) {
-                                textBuffer.add(new PlainText(temp));
-                                temp = "";
-                            }
+                            textBuffer.add(new PlainText(temp));
+                            temp = "";
                         } else if(line.charAt(i) == ']') {
                             String text = temp;
 
                             temp = "";
 
-                            if(line.length() - 1 > i && (line.charAt(i + 1) == '[')) {
+                            if(line.charAt(i + 1) == '[') {
                                 i += 2;
 
                                 while(line.length() - 1 > i && line.charAt(i) != ']') {
                                     temp += line.charAt(i++);
                                 }
 
-                                if (temp.length() > 0) {
-                                    textBuffer.add(new HTMLCode(text, "a", temp));
-                                    temp = "";
-                                }
+                                textBuffer.add(new HTMLCode(text, "a", temp));
+                                temp = "";
                             }
 
                             if(line.length() - 1 > i && (line.charAt(i + 1) == '(')) {
                                 i += 2;
 
-                                while(line.length() - 1 > i && line.charAt(i) != ')') {
+                                while(line.charAt(i) != ')') {
                                     temp += line.charAt(i++);
                                 }
 
-                                if (temp.length() > 0) {
-                                    String[] meta = temp.split(" ");
+                                String[] meta = temp.split(" ");
 
-                                    if(meta.length >= 2) {
-                                        textBuffer.add(new HTMLCode(text, "a", meta[0], meta[1].substring(1, meta[1].length() - 1)));
-                                    }
+                                textBuffer.add(new HTMLCode(text, "a", meta[0], meta[1].substring(1, meta[1].length() - 1)));
 
-                                    temp = "";
-                                }
+                                temp = "";
                             }
-
                         } else {
                             temp += line.charAt(i);
                         }
@@ -149,19 +134,17 @@ public class MDParser {
                 } else if(line.matches("\\[.+\\]:.+ [\\(\"].+[\\)\"]")) {
                     String[] meta = line.split(" ");
 
-                    if(meta.length >= 3) {
-                        String id = meta[0].replaceAll("[\\[\\]:]", "");
-                        String link = meta[1];
-                        String optional = meta[2].replaceAll("[\"\\(\\)]", "");
+                    String id = meta[0].replaceAll("[\\[\\]:]", "");
+                    String link = meta[1];
+                    String optional = meta[2].replaceAll("[\"\\(\\)]", "");
 
-                        for(Structure struct : doc.getStructures()) {
-                            HTMLCode code = findHTMLById(struct, id);
+                    for(Structure struct : doc.getStructures()) {
+                        HTMLCode code = findHTMLById(struct, id);
 
-                            if(code != null) {
-                                code.setLink(link);
-                                code.setTitle(optional);
-                                break;
-                            }
+                        if(code != null) {
+                            code.setLink(link);
+                            code.setTitle(optional);
+                            break;
                         }
                     }
                 } else if(line.matches(".*!\\[.+\\]\\(.+\\).*")) {
@@ -170,11 +153,9 @@ public class MDParser {
                     String src = "";
 
                     for(int i = 0; i < line.length(); i++) {
-                        if(line.length() - 1 > i + 1 && line.charAt(i) == '!' && line.charAt(i + 1) == '[') {
-                            if(temp.length() > 0) {
-                                textBuffer.add(new PlainText(temp));
-                                temp = "";
-                            }
+                        if(line.charAt(i) == '!') {
+                            textBuffer.add(new PlainText(temp));
+                            temp = "";
 
                             i += 2;
                             while(line.charAt(i) != ']') {
@@ -273,6 +254,8 @@ public class MDParser {
             System.out.println("File load error.");
         }
 
+        doc.structures.add(new Tail());
+
         return doc;
     }
 
@@ -283,25 +266,20 @@ public class MDParser {
             }
         }
 
-        if(struct.getChildren().size() > 0) {
-            for(Structure child : struct.getChildren()) {
-                return findHTMLById(child, id);
-            }
-        }
+        for(Structure child : struct.getChildren())
+            return findHTMLById(child, id);
 
         return null;
     }
 
     private void clearTextBuffer(Document doc, List<Text> textBuffer, ItemList itemList, int depth, QuotedBlock quotedBlock) {
         if(itemList != null) {
-            if(textBuffer.size() != 0) {
-                Item item = new Item(depth);
+            Item item = new Item(depth);
 
-                for (Text text : textBuffer) { item.addText( text ); }
+            for (Text text : textBuffer) { item.addText( text ); }
 
-                itemList.addItem( item );
-                textBuffer.clear();
-            }
+            itemList.addItem( item );
+            textBuffer.clear();
             doc.structures.add(itemList);
         }
 
@@ -322,7 +300,7 @@ public class MDParser {
         }
     }
 
-    private int getIndentLevel(String line) {
+    public int getIndentLevel(String line) {
         for(int i = 0; i < line.length(); i++)
             if(line.charAt(i) != ' ') return i;
 
