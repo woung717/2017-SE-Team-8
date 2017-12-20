@@ -11,4 +11,12 @@ public class Header extends Structure {
         this.type = type;
         this.level = level;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }

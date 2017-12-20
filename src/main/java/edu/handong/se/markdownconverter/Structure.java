@@ -1,5 +1,6 @@
 package edu.handong.se.markdownconverter;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Structure implements MDElement {
     }
 
     @Override
-    public void accept(MDElementVisitor visitor) {
+    public void accept(MDElementVisitor visitor) throws IOException {
         visitor.visitStructure(this);
     }
 

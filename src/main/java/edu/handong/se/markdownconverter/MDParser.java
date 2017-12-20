@@ -38,7 +38,7 @@ public class MDParser {
                     for (int i = 0; i < line.length(); i++) {
                         if (line.charAt(i) == '*') {
                             if (!starFlag) {
-                                boldType = (line.charAt(i + 1) == '*') ? "strong" : "emphasize";
+                                boldType = (line.charAt(i + 1) == '*') ? "strong" : "em";
 
                                 if (line.length() - 1 > i && line.charAt(i + 1) == '*') i++;
                                 starFlag = true;
@@ -113,7 +113,7 @@ public class MDParser {
                                 }
 
                                 if (temp.length() > 0) {
-                                    textBuffer.add(new HTMLCode(text, temp));
+                                    textBuffer.add(new HTMLCode(text, "a", temp));
                                     temp = "";
                                 }
                             }
@@ -129,7 +129,7 @@ public class MDParser {
                                     String[] meta = temp.split(" ");
 
                                     if(meta.length >= 2) {
-                                        textBuffer.add(new HTMLCode(text, meta[0], meta[1].substring(1, meta[1].length() - 1)));
+                                        textBuffer.add(new HTMLCode(text, "a", meta[0], meta[1].substring(1, meta[1].length() - 1)));
                                     }
 
                                     temp = "";
@@ -184,6 +184,7 @@ public class MDParser {
 
                             HTMLCode image = new HTMLCode();
 
+                            image.setType("img");
                             image.setLink(src);
                             image.setTitle(alt);
 
