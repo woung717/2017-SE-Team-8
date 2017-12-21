@@ -91,7 +91,7 @@ public class MDParserTest
 	    System.setOut(new PrintStream(outContent));
 	    MarkdownConverter MC = new MarkdownConverter();
 	    MC.printHelpMessage();
-	    String expectedOutput = "Usage: MarkdownConverter -i <input_file(s)> [-o <output_file(s)>]\r\n Convert markdown format files to HTML files corresponding <input_file(s)> to <output_file(s)>.\r\n";
+	    String expectedOutput = "Usage: java -jar MarkdownConverter.jar [-h|--help] -i <input_file(s)> [-o <output_file(s)>]\r\n Convert markdown format files to HTML files corresponding <input_file(s)> to <output_file(s)>.\r\n";
 	    assertEquals(expectedOutput, outContent.toString());
 	}
 
