@@ -26,6 +26,7 @@
 		<delete dir="${build.dir}"/>
 		<delete dir="report" />
 		<delete file="jacoco.exec" />
+		<delete file="MarkdownConverter.jar" />
 		<delete>
 			<fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~"/>
 		</delete>
