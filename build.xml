@@ -20,11 +20,6 @@
 			<classpath path="lib/hamcrest-core.jar" />
 		</javac>
 	</target>
-
-	<!-- Generate javadocs for current project into ${doc.dir} -->
-	<target name="doc" depends="init" description="generate documentation">
-		<javadoc sourcepath="${source.dir}" destdir="${doc.dir}"/>
-	</target>
 	
 	<!-- Delete the build & doc directories and Emacs backup (*~) files -->
 	<target name="clean" description="tidy up the workspace">
